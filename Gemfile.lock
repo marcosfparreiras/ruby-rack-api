@@ -25,6 +25,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.6.0)
     rspec-support (3.6.0)
+    sequel (5.0.0)
     slop (3.6.0)
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
@@ -39,6 +40,7 @@ DEPENDENCIES
   pry (~> 0.10.4)
   rack (~> 2.0, >= 2.0.3)
   rspec (~> 3.5)
+  sequel (~> 5.0)
   thin (~> 1.6, >= 1.6.4)
 
 BUNDLED WITH

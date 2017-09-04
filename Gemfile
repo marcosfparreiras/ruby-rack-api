@@ -6,6 +6,7 @@ gem 'thin', '~> 1.6', '>= 1.6.4'
 
 # Database related gems
 gem 'pg', '~> 0.18'
+gem 'sequel', '~> 5.0'
 
 group :development, :test do
   gem 'rspec', '~> 3.5'
