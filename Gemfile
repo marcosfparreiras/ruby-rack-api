@@ -10,5 +10,6 @@ gem 'sequel', '~> 5.0'
 
 group :development, :test do
   gem 'rspec', '~> 3.5'
+  gem 'rack-test', '~> 0.7.0'
   gem 'pry', '~> 0.10.4'
 end
