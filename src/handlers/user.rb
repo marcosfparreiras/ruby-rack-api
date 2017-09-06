@@ -15,7 +15,7 @@ module Handlers
       pin = params.delete('pin')
       authenticate_user(pin)
       token = create_token
-      [201, { 'Content-Type' => 'text/plain' }, [{ data: { token_id: token.id }}.to_json]]
+      RackResponseBuilder.build(201, [{ data: { token_id: token.id } }.to_json])
     end
 
     private

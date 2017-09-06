@@ -16,7 +16,7 @@ module Handlers
       raise ::CustomErrors::Forbiden unless has_enough_balance?(amount)
       update_account_balance(token_account, -amount)
       create_operation(-amount, 'withdraw')
-      [200, {"Content-Type" => "text/plain"}, [{data: token_account.values}.to_json]]
+      RackResponseBuilder.build(200, [{ data: token_account.values }.to_json])
     end
 
     def deposit(params)
@@ -26,7 +26,7 @@ module Handlers
       raise ::CustomErrors::Forbiden.new unless account
       update_account_balance(account, +amount)
       create_operation(amount, 'deposit')
-      [200, {"Content-Type" => "text/plain"}, [{data: account.values}.to_json]]
+      RackResponseBuilder.build(200, [{ data: account.values }.to_json])
     end
 
     def operations(params)
@@ -34,13 +34,13 @@ module Handlers
       to = params.delete('to')
       type = params.delete('type')
       values = account_operations(from, to, type)
-      [200, {"Content-Type" => "text/plain"}, [{data: values}.to_json]]
+      RackResponseBuilder.build(200, [{ data: values }.to_json])
     end
 
     def signout
       token_id = @token.id
       @token.destroy
-      [200, {"Content-Type" => "text/plain"}, [{data: {token_id: token_id}}.to_json]]
+      RackResponseBuilder.build(200, [{ data: { token_id: token_id } }.to_json])
     end
 
     private

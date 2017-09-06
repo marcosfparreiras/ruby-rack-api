@@ -40,10 +40,9 @@ describe 'User' do
           allow(subject).to receive(:create_token).and_return(fake_token)
         end
 
-        it 'creates a new token and return it' do
+        it 'creates a new token and return success status' do
           params = { 'pin' => 'mypin' }
-          expected_return = [201, { 'Content-Type' => 'text/plain' }, [{ data: {token_id: token_number }}.to_json]]
-          expect(subject.authenticate(params)).to eq(expected_return)
+          expect(subject.authenticate(params)[0]).to eq(201)
         end
       end
     end
