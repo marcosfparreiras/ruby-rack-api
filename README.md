@@ -65,6 +65,22 @@ params:
 return: { data: { token: <token_id> } }
 ```
 
+# Some advantages and disadvantage
+
+1. As the API is specif for the ATM, there is no way to use to create users and accounts. The advantage of it is that the API has a small and focused responsability. The disadvantage is that it restricts our use (we would have to have another resource to creat these users and accounts).
+
+2. Another advantage of this API is that is handles requests and returns specific HTTP status code, what allow as to understand better each request. As it doesn't meant to run for real (at least for now), only the most important status code were added to the responses (what is also a disadvantage).
+
+3. As the API follows a REST API pattern, the porpose for each route is really easy to understand (once we have some experience with it).
+
+4. A limitation over one endpoint is that the tokens are not deleted by the backend. The ATM machine is responsable for handling it, since it's its responsability to know when to open a connection and guarantee that the it will be closed.
+
+5. One good advantage is that the code is covered by specs (unit tests), what is a good documentation itself. It turns easier for someone to read its specs output and understand what it does and how it does and, of course, gives us confidence to make changes and refactor the code without breaking it. An disadvantage is that there aren't any integration tests (at least for now).
+
+6. Another advantage is that the database used is Postgres, a really robust database.
+
+7. A **HUGE** advatange is that the project was built using Docker, what allow us to have it set up quickly on a local machine or even in production. As the API refers to a container itself, it can be **scaled** appart from the database (#goMicroServices). As the database is another container, it can be easily scaled as well (\o/)
+
 # How to run it
 
 The project was built over Docker. So all you need to execute it is to install [Docker](https://docs.docker.com/engine/installation/) and [Docker Compose](https://docs.docker.com/compose/install/)
