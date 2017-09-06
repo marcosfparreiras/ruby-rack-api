@@ -43,6 +43,7 @@ class DatabaseConnection
         foreign_key :account_number, :accounts
         String :type, allow_null: false
         Float :amount, allow_null: false
+        Date :date, default: Date.today
       end
     end
 

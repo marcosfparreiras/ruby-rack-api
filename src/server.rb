@@ -1,7 +1,24 @@
+require_relative 'lib/custom_errors/forbiden'
+require_relative 'lib/custom_errors/not_found'
+require_relative 'lib/custom_errors/unauthorized'
+require_relative 'lib/custom_errors/unprocessable_entity'
+
 class AtmServer
   NAMESPACES = %w(users tokens ping).freeze
+  ERROR_CLASSES = [
+    ::CustomErrors::Forbiden,
+    ::CustomErrors::NotFound,
+    ::CustomErrors::Unauthorized,
+    ::CustomErrors::UnprocessableEntity
+  ].freeze
 
   def self.call(env)
+    process_route(env)
+  rescue *ERROR_CLASSES => e
+    e.rack_response
+  end
+
+  def self.process_route(env)
     env = parse_env(env)
     namespace = env[:paths].shift
     return error_page_not_found unless NAMESPACES.include?(namespace)
@@ -34,18 +51,21 @@ class AtmServer
     id = env[:paths][0]
     action = env[:paths][1]
 
-    if env[:request_method] == :get
+    case env[:request_method]
+    when :get
       case action
       when 'operations'
         Handlers::Token.new(id).operations(env[:params])
       end
-    elsif env[:request_method] == :post
+    when :post
       case action
       when 'withdraw'
         Handlers::Token.new(id).withdraw(env[:params])
       when 'deposit'
         Handlers::Token.new(id).deposit(env[:params])
       end
+    when :delete
+      Handlers::Token.new(id).signout
     end
   end
 
